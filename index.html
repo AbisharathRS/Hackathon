@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>IBM Store — Demo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#f0f2f5;color:#333;}
+.hidden{display:none;}
+h1,h2,h3{text-align:center;margin-bottom:20px;}
+input, select{width:100%;padding:10px;margin:10px 0;border:1px solid #ccc;border-radius:6px;}
+button{padding:8px 12px;border:none;border-radius:6px;background:#007bff;color:#fff;cursor:pointer;font-size:14px;}
+button:hover{background:#0056b3;}
+.login-container{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:40px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,0.2);width:320px;text-align:center;}
+.navbar{display:flex;justify-content:space-between;align-items:center;background:#2874f0;padding:12px 20px;color:#fff;border-radius:10px;margin-bottom:20px;}
+.navbar .logo{font-weight:700;font-size:20px;}
+.navbar button{background:#ff9f00;color:#fff;margin-left:8px;}
+.hero{background:linear-gradient(135deg,#ff0000,#f38282);color:#fff;padding:40px 20px;text-align:center;border-radius:12px;margin-bottom:20px;position:relative;overflow:hidden;}
+.hero img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.3;border-radius:12px;z-index:0;}
+.hero-content{position:relative;z-index:1;max-width:500px;margin:auto;}
+.promo-cards{display:flex;gap:12px;overflow-x:auto;margin-bottom:20px;}
+.promo-cards .card{flex:0 0 200px;padding:20px;border-radius:10px;text-align:center;color:#fff;}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:15px;}
+.product-card{border:1px solid #ddd;border-radius:8px;padding:10px;cursor:pointer;position:relative;transition:0.3s;text-align:center;}
+.product-card:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,0.15);}
+.product-card img{width:100%;height:150px;object-fit:cover;border-radius:6px;}
+.cart-item{display:flex;justify-content:space-between;align-items:center;margin:10px 0;border-bottom:1px solid #eee;padding-bottom:8px;}
+.cart-item span{flex:1;}
+.qty-controls{display:flex;align-items:center;gap:6px;}
+.qty-controls button{background:#6c757d;color:#fff;border-radius:4px;padding:2px 6px;}
+.qty-controls button:hover{background:#495057;}
+.remove-btn{background:#dc3545;color:#fff;border-radius:4px;padding:2px 6px;}
+.remove-btn:hover{background:#b02a37;}
+.center{text-align:center;margin-top:20px;}
+.back-btn{background:#6c757d;color:#fff;margin-bottom:15px;}
+.back-btn:hover{background:#565e64;}
+.section{border-radius:12px;padding:20px;margin-bottom:20px;}
+#sliderControls{margin-top:10px;text-align:center;}
+#sliderControls button{margin:0 6px;padding:6px 12px;border-radius:6px;border:1px solid #2874f0;background:#fff;color:#2874f0;cursor:pointer;font-weight:700;}
+#thumbnailContainer{display:flex;justify-content:center;margin-top:10px;gap:6px;flex-wrap:wrap;}
+#thumbnailContainer img{width:50px;height:50px;object-fit:cover;border:2px solid #ddd;border-radius:4px;cursor:pointer;}
+#thumbnailContainer img.selected{border-color:#007bff;}
+.slider-wrapper {width:100%;max-height:400px;display:flex;justify-content:center;align-items:center;overflow:hidden;margin-bottom:10px;}
+#detailImg {width: 30%;height: 30%;object-fit:contain;border-radius:8px;display:block;}
+#searchContainer{display:flex; gap:6px; margin-bottom:10px;}
+#categoryButtons{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:15px;}
+#categoryButtons button{background:#f0f0f0;color:#333;border:1px solid #ccc;}
+#categoryButtons button:hover{background:#2874f0;color:#fff;}
+.coupon-tag {background: #facc15;color: #333;padding: 3px 7px;border-radius: 4px;margin: 2px;font-size: 12px;display:inline-block;}
+.coupon-btn {background: #2874f0;color:#fff;border-radius:4px;padding:2px 5px;border:none;cursor:pointer;margin-left:5px;font-size:12px;}
+.coupon-btn:hover {background: #0056b3;}
+.coupon-list-section {background:#fff8e1;padding:20px;border-radius:12px;margin-bottom:20px;}
+.coupon-card {background:#fffbe7;padding:10px 18px; border:1px solid #ffe082; border-radius:8px; margin-bottom:12px; display:flex;justify-content:space-between;align-items:center;}
+.coupon-code-show {font-weight:700;color:#bf9100;font-size:16px;}
+.coupon-expiry {color:#d32f2f;font-size:13px;margin-left:8px;}
+.copy-btn {background:#2874f0;color:#fff;padding:4px 7px;border-radius:4px;margin-left:12px;cursor:pointer;}
+.copy-btn:hover {background:#0056b3;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="login-container">
+  <h2>IBM Store Login</h2>
+  <form id="loginForm" class="form active">
+    <input type="email" id="loginEmail" placeholder="Email" required />
+    <input type="password" id="loginPassword" placeholder="Password" required />
+    <button type="submit">Sign In</button>
+  </form>
+  <p>
+    Don't have an account? 
+    <button id="showSignupBtn" type="button" style="background:#6c757d;">Sign Up</button>
+  </p>
+</div>
+
+<!-- SIGNUP PAGE -->
+<div id="signupPage" class="login-container hidden">
+  <h2>IBM Store Signup</h2>
+  <form id="signupForm" class="form">
+    <input type="text" id="signupName" placeholder="Full Name" required />
+    <input type="email" id="signupEmail" placeholder="Email" required />
+    <input type="password" id="signupPassword" placeholder="Password" required />
+    <button type="submit">Create Account</button>
+  </form>
+  <p>
+    Already have an account?
+    <button id="showLoginBtn" type="button" style="background:#6c757d;">Log In</button>
+  </p>
+</div>
+
+<!-- COUPONS PAGE -->
+<div id="couponsPage" class="hidden" style="max-width:550px;margin:40px auto;text-align:left;">
+  <button onclick="backToHome()" class="back-btn">← Back to Home</button>
+  <h2>Available Coupons</h2>
+  <div id="couponListSection" class="coupon-list-section"></div>
+</div>
+
+<!-- HOME PAGE -->
+<div id="homePage" class="hidden">
+  <div class="navbar">
+    <div class="logo">IBM Store</div>
+    <div>
+      <button onclick="showCart()">Cart 🛒 (<span id="cartCount">0</span>)</button>
+      <button onclick="showOrders()">📦 Orders</button>
+      <button onclick="showCouponsPage()" style="background:#ffe082;color:#222;margin-left:10px;">Coupons</button>
+      <button onclick="logout()" style="background:#6c757d;">Logout</button>
+    </div>
+  </div>
+  <div class="hero">
+    <img src="https://img.freepik.com/free-vector/happy-diwali-red-banner-with-text-space_1017-28648.jpg" alt="Diwali Sale Banner">
+    <div class="hero-content">
+      <h1>🔥 Diwali Sale!</h1>
+      <p>Up to 50% off on selected products 🎉</p>
+      <button onclick="alert('Offers start soon...')">Grab Offers</button>
+    </div>
+  </div>
+  <div class="promo-cards">
+    <div class="card" style="background:#facc15;color:#333;">Buy 1 Get 1 Free<br>Accessories</div>
+    <div class="card" style="background:#f472b6;">20% OFF<br>Smartphones</div>
+    <div class="card" style="background:#60a5fa;">Free Shipping<br>Orders ₹5000+</div>
+  </div>
+  <div id="searchContainer">
+    <input type="text" id="searchBar" placeholder="Search products..." style="flex:1; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ccc; background: url('https://cdn-icons-png.flaticon.com/512/622/622669.png') no-repeat 10px center; background-size:16px 16px;">
+    <button onclick="searchProducts()" style="padding:10px 15px; border-radius:6px; background:#2874f0; color:#fff; border:none; cursor:pointer;">Search</button>
+  </div>
+  <div id="categoryButtons">
+    <button onclick="filterCategory('All')">All</button>
+    <button onclick="filterCategory('Electronics')">Electronics</button>
+    <button onclick="filterCategory('Computers')">Computers</button>
+    <button onclick="filterCategory('Mobiles')">Mobiles</button>
+    <button onclick="filterCategory('Appliances')">Appliances</button>
+    <button onclick="filterCategory('Accessories')">Accessories</button>
+    <button onclick="filterCategory('Audio')">Audio</button>
+    <button onclick="filterCategory('Wearables')">Wearables</button>
+  </div>
+  <section class="section" style="background: linear-gradient(135deg,#fef9c3,#d9f99d);">
+    <h2>Top Deals</h2>
+    <div id="productList" class="product-grid"></div>
+  </section>
+</div>
+
+<!-- PRODUCT DETAIL PAGE -->
+<div id="productDetailPage" class="hidden">
+  <button onclick="backToHome()" class="back-btn">← Back</button>
+  <h2 id="detailName"></h2>
+  <div class="slider-wrapper">
+    <img id="detailImg">
+  </div>
+  <div id="sliderControls">
+    <button onclick="prevSlide()">Prev</button>
+    <span id="slideIndicator"></span>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+  <div id="thumbnailContainer"></div>
+  <p id="detailDesc"></p>
+  <p><strong>Price:</strong> ₹<span id="detailPrice"></span></p>
+  <button onclick="addToCart()">Add to Cart</button>
+</div>
+
+<!-- CART PAGE -->
+<div id="cartPage" class="hidden">
+  <button onclick="backToHome()" class="back-btn">← Back to Home</button>
+  <h2>Shopping Cart</h2>
+  <div id="cartItems"></div>
+  <div class="center" id="bestCoupons">
+    <b style="color:#2874f0;">Best Coupons for you:</b>
+  </div>
+  <div class="center">
+    <input type="text" id="couponCodeInput" placeholder="Enter coupon code" />
+    <button onclick="applyCoupon()">Apply Coupon</button>
+    <span id="couponMsg"></span>
+  </div>
+  <div class="center">Total: ₹<span id="cartTotal">0</span></div>
+  <div class="center"><button onclick="Buy()">Buy</button></div>
+</div>
+
+<!-- ORDER HISTORY PAGE -->
+<div id="orderHistoryPage" class="hidden">
+  <button onclick="backToHome()" class="back-btn">← Back to Home</button>
+  <h2>📦 My Orders</h2>
+  <div id="orderList"></div>
+</div>
+
+<script>
+const couponsPage = document.getElementById("couponsPage");
+const couponListSection = document.getElementById("couponListSection");
+const loginPage = document.getElementById("loginPage");
+const signupPage = document.getElementById("signupPage");
+const homePage = document.getElementById("homePage");
+const productDetailPage = document.getElementById("productDetailPage");
+const cartPageDiv = document.getElementById("cartPage");
+const orderHistoryPage = document.getElementById("orderHistoryPage");
+const productList = document.getElementById("productList");
+const cartCountEl = document.getElementById("cartCount");
+const searchBar = document.getElementById("searchBar");
+const detailName = document.getElementById("detailName");
+const detailImg = document.getElementById("detailImg");
+const detailDesc = document.getElementById("detailDesc");
+const detailPrice = document.getElementById("detailPrice");
+const slideIndicator = document.getElementById("slideIndicator");
+const thumbnailContainer = document.getElementById("thumbnailContainer");
+
+let currentUser = "", cart = [], currentProduct = null, currentSlide = 0;
+let token = localStorage.getItem("ibm_token") || "";
+let appliedCoupon = null;
+let discountAmount = 0;
+
+const products = [
+  {id:1,name:"Laptop",desc:"High performance laptop",price:60000,images:[
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQkwGBWvuL9Jofdx2iWsulxSUi9LOqhdm4ubPgkegrfwJ_8-xGVtWYOWhx0i--XYMEUkwf3-ZLwTjZg68Et8hvIUu8KT_C6JyntNR9Ka-ZBSUAUPGMr1ajs",
+    "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT8NK0g9xVj1kWhYeIo-pj7NN2O232LdTKs59UFrjLnG_rvzWUDEuqLuispGjRN8VZnxZdTAANOED5Jcs6sjxipKJ2E3LXfNPdFgjc9VvOE1fvnvutODb4",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ-MPH-mHiccCECDJR4FhnOIIkgu7wMlPAkapNts6KIyQgSFTKVvHehZilr11wqLjAEqaYB61Bc8HZbX8XshCS2ruMaPrNCiOGfz32zBNiuI2I0V1tVzC-t"
+    ],category:"Computers",coupons:["DIWALI50", "WELCOME10"]},
+  {id:2,name:"Smartphone",desc:"Latest Android smartphone",price:25000,images:[
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRMd4PoUpNEUuHqBFD5BG8UVzTUVbeFeGOM13hw2PGmBL8I7GRmeCeibevHoOGQUaRqhVeN5VRRyDZQkPJi6T64-RRZ-84Zew",
+    "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQd6g0Ius7f-zZ2p5d9yDZSyA-EPEZM-fv7eaXo0HHwIlSdUmPJnmBJoBKnMHFkAODZe9zLhQePRo5fQTN6TIWxDdJJzFbZKJs",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT5PbLLQrbGg8_eF6m6FG_cIY7PbBMludNn7TGEiTMMupimLbK03TmwqKCVpKcJ90rLkSBvojxoXHMoL3eWw9OMNhqx-pFg8mw"
+    ],category:"Mobiles",coupons:["DIWALI50","WELCOME10"]}
+];
+
+function getProductDiscount(product, coupon) {
+  if (coupon && product.coupons && product.coupons.includes(coupon)) {
+    if (coupon === "DIWALI50") return 500;
+    if (coupon === "WELCOME10") return 100;
+  }
+  return 0;
+}
+
+function hideAllPages() {
+  loginPage.classList.add("hidden");
+  signupPage.classList.add("hidden");
+  homePage.classList.add("hidden");
+  productDetailPage.classList.add("hidden");
+  cartPageDiv.classList.add("hidden");
+  orderHistoryPage.classList.add("hidden");
+  couponsPage.classList.add("hidden");
+}
+
+function backToHome(){
+  hideAllPages();
+  homePage.classList.remove("hidden");
+  renderProducts();
+}
+
+async function showCouponsPage() {
+  hideAllPages();
+  couponsPage.classList.remove("hidden");
+  couponListSection.innerHTML = "<div>Loading...</div>";
+  try {
+    const res = await fetch('http://localhost:5500/api/coupons');
+    const coupons = await res.json();
+    if (!coupons.length) {
+      couponListSection.innerHTML = "<p> DIWALI50,WELCOME10.</p>";
+      return;
+    }
+    couponListSection.innerHTML = "";
+    coupons.forEach(cpn => {
+      couponListSection.innerHTML += `
+        <div class="coupon-card">
+          <span>
+            <span class="coupon-code-show">${cpn.code}</span>
+            <span class="coupon-expiry">${cpn.expiry ? "Expires: " + new Date(cpn.expiry).toLocaleDateString() : "No expiry"}</span>
+            <span style="margin-left:10px;">${cpn.desc || ""}</span>
+          </span>
+          <button class="copy-btn" onclick="copyCouponCode('${cpn.code}')">Copy</button>
+        </div>
+      `;
+    });
+  } catch {
+    couponListSection.innerHTML = "<p>Failed to fetch coupons!</p>";
+  }
+}
+
+function copyCouponCode(code) {
+  navigator.clipboard.writeText(code);
+  alert("Coupon " + code + " copied to clipboard!");
+}
+
+async function login(e) { e.preventDefault();
+  let email = document.getElementById("loginEmail").value.trim();
+  let pass = document.getElementById("loginPassword").value.trim();
+  if(email && pass) {
+    try {
+      const res = await fetch('http://localhost:5500/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: pass })
+      });
+      const data = await res.json();
+      if (res.ok && data.token) {
+        token = data.token;
+        localStorage.setItem("ibm_token", token);
+        currentUser = email;
+        hideAllPages();
+        homePage.classList.remove("hidden");
+        renderProducts();
+        updateCartCount();
+      } else {
+        alert(data.msg || "Login failed.");
+      }
+    } catch (err) {
+      alert("Network error during login.");
+    }
+  } else {
+    alert("Enter email and password!");
+  }
+}
+async function signup(e) { e.preventDefault();
+  let name = document.getElementById("signupName").value.trim();
+  let email = document.getElementById("signupEmail").value.trim();
+  let pass = document.getElementById("signupPassword").value.trim();
+  if(name && email && pass) {
+    try {
+      const res = await fetch('http://localhost:5500/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password: pass })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert("Account created! Please log in.");
+        showLogin();
+      } else {
+        alert(data.msg || "Registration failed.");
+      }
+    } catch (err) {
+      alert("Network error during registration.");
+    }
+  } else {
+    alert("Please fill all fields!");
+  }
+}
+function logout() {
+  currentUser = "";
+  cart = [];
+  token = "";
+  appliedCoupon = null;
+  discountAmount = 0;
+  localStorage.removeItem("ibm_token");
+  showLogin();
+}
+
+function renderProducts(productsToRender){
+  productList.innerHTML="";
+  const arr = productsToRender || products;
+  arr.forEach((p)=>{
+    let discount = getProductDiscount(p, appliedCoupon);
+    let newPrice = p.price - discount;
+    let priceHTML = discount > 0
+      ? `<span style="text-decoration:line-through;color:#888;">₹${p.price}</span>
+         <span style="color:#2cbe2c;font-weight:bold;margin-left:8px;">₹${newPrice}</span>`
+      : `₹${p.price}`;
+    const card=document.createElement("div"); card.className="product-card";
+    card.innerHTML=`
+      <img src="${p.images[0]}">
+      <h3>${p.name}</h3>
+      <p>${priceHTML}</p>
+      <div>
+        ${p.coupons ? p.coupons.map(cpn =>
+          `<span class="coupon-tag">Coupon: ${cpn}</span>`).join('') : ''}
+      </div>
+    `;
+    card.onclick=()=>showProductDetail(p.id);
+    productList.appendChild(card);
+  });
+}
+function filterCategory(cat){ if(cat==='All'){ renderProducts(); return; } const filtered = products.filter(p=>p.category===cat); renderProducts(filtered); }
+function searchProducts(){ const query = searchBar.value.trim().toLowerCase(); if(!query){ renderProducts(); return; } const filtered = products.filter(p=>p.name.toLowerCase().includes(query)); renderProducts(filtered); }
+function showProductDetail(id){
+  currentProduct=products.find(p=>p.id===id); if(!currentProduct) return; currentSlide=0;
+  detailName.textContent=currentProduct.name; detailDesc.textContent=currentProduct.desc;
+  detailPrice.textContent=currentProduct.price; detailImg.src=currentProduct.images[currentSlide];
+  slideIndicator.textContent=`${currentSlide+1}/${currentProduct.images.length}`; renderThumbnails();
+  hideAllPages(); productDetailPage.classList.remove("hidden");
+}
+function prevSlide(){ if(!currentProduct) return; currentSlide=(currentSlide-1+currentProduct.images.length)%currentProduct.images.length; detailImg.src=currentProduct.images[currentSlide]; slideIndicator.textContent=`${currentSlide+1}/${currentProduct.images.length}`; updateThumbnailHighlight(); }
+function nextSlide(){ if(!currentProduct) return; currentSlide=(currentSlide+1)%currentProduct.images.length; detailImg.src=currentProduct.images[currentSlide]; slideIndicator.textContent=`${currentSlide+1}/${currentProduct.images.length}`; updateThumbnailHighlight(); }
+function renderThumbnails() {
+  thumbnailContainer.innerHTML = "";
+  currentProduct.images.forEach((img, i) => {
+    const t = document.createElement("img");
+    t.src = img;
+    t.onclick = () => {
+      currentSlide = i;
+      detailImg.src = img;
+      slideIndicator.textContent = `${currentSlide+1}/${currentProduct.images.length}`;
+      updateThumbnailHighlight();
+    };
+    if(i === currentSlide) t.classList.add("selected");
+    thumbnailContainer.appendChild(t);
+  });
+}
+function updateThumbnailHighlight(){ const imgs = thumbnailContainer.querySelectorAll("img"); imgs.forEach((img,i)=>{ img.classList.toggle("selected", i===currentSlide); }); }
+function addToCart(){ if(!currentProduct) return; const existing=cart.find(c=>c.id===currentProduct.id); if(existing) existing.qty++; else cart.push({...currentProduct,qty:1}); updateCartCount(); alert("Added to cart!"); }
+function updateCartCount(){ cartCountEl.textContent=cart.reduce((a,b)=>a+b.qty,0); }
+
+function renderBestCoupons() {
+  const bestCouponsDiv = document.getElementById("bestCoupons");
+  bestCouponsDiv.innerHTML = '<b style="color:#2874f0;">Best Coupons for you:</b>';
+  // No frontend add, display hardcoded demo (or load from backend for real case)
+  bestCouponsDiv.innerHTML += `
+    <span class="coupon-tag">Coupon: DIWALI50</span>
+    <span class="coupon-tag">Coupon: WELCOME10</span>`;
+}
+
+function setCouponCode(code) {
+  document.getElementById('couponCodeInput').value = code;
+  applyCoupon();
+}
+
+function showCart(){
+  hideAllPages();
+  cartPageDiv.classList.remove("hidden");
+  renderBestCoupons();
+  const cartItemsDiv = document.getElementById("cartItems");
+  cartItemsDiv.innerHTML = "";
+  let total = 0, originalTotal = 0;
+  cart.forEach((item, index) => {
+    let discount = getProductDiscount(item, appliedCoupon);
+    let discountedPrice = Math.max(item.price - discount, 0);
+    let itemTotal = discountedPrice * item.qty;
+    let itemOriginalTotal = item.price * item.qty;
+    total += itemTotal;
+    originalTotal += itemOriginalTotal;
+    let priceHTML = appliedCoupon && discount > 0
+      ? `<span style="text-decoration:line-through;color:#888;">₹${itemOriginalTotal}</span>
+         <span style="color:#2cbe2c;font-weight:bold;margin-left:8px;">₹${itemTotal}</span>`
+      : `₹${itemOriginalTotal}`;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <div class="qty-controls">
+        <button onclick="updateQty(${index}, -1)">-</button>
+        ${item.qty}
+        <button onclick="updateQty(${index}, 1)">+</button>
+      </div>
+      <span>${priceHTML} <button class="remove-btn" onclick="removeCartItem(${index})">Remove</button></span>`;
+    cartItemsDiv.appendChild(div);
+  });
+  document.getElementById("cartTotal").innerHTML =
+    (appliedCoupon && total < originalTotal)
+      ? `<span style="text-decoration:line-through;color:#888;">₹${originalTotal}</span>
+         <span style="color:#2cbe2c;">₹${total}</span>`
+      : `₹${originalTotal}`;
+  document.getElementById("couponMsg").textContent =
+    appliedCoupon ? `Coupon "${appliedCoupon}" applied!` : "";
+  discountAmount = originalTotal - total;
+}
+function updateQty(index, change){ cart[index].qty += change; if(cart[index].qty < 1) cart.splice(index,1); showCart(); updateCartCount(); }
+function removeCartItem(index){ cart.splice(index,1); showCart(); updateCartCount(); }
+
+async function applyCoupon() {
+  const code = document.getElementById("couponCodeInput").value.trim();
+  if(!code) {
+    document.getElementById("couponMsg").textContent = "Enter a coupon code!";
+    return;
+  }
+  appliedCoupon = code;
+  showCart();
+  renderProducts();
+}
+
+async function Buy() {
+  if(cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
+  let total = 0;
+  cart.forEach(b => {
+    total += Math.max(b.price - getProductDiscount(b, appliedCoupon), 0) * b.qty;
+  });
+  try {
+    const res = await fetch('http://localhost:5500/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({
+        items: cart.map(item => ({
+          product: { ...item },
+          qty: item.qty
+        })),
+        total,
+        coupon: appliedCoupon || ""
+      })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert("Order placed!");
+      cart = [];
+      appliedCoupon = null;
+      discountAmount = 0;
+      updateCartCount();
+      backToHome();
+    } else {
+      alert(data.msg || "Order failed.");
+    }
+  } catch (err) {
+    alert("Network error during order.");
+  }
+}
+
+async function showOrders() {
+  hideAllPages();
+  orderHistoryPage.classList.remove("hidden");
+  try {
+    const res = await fetch('http://localhost:5500/api/orders', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    const data = await res.json();
+    const orderListDiv = document.getElementById("orderList");
+    if(!data.length) { orderListDiv.textContent="No orders yet."; return; }
+    orderListDiv.innerHTML = "";
+    data.forEach((order, i) => {
+      let orderTotal = order.total;
+      let origTotal = order.items.reduce((sum, item) =>
+        sum + item.product.price * item.qty, 0);
+      let couponCode = order.coupon || "";
+      let discountText = (couponCode && orderTotal < origTotal)
+          ? `<span style="text-decoration:line-through;color:#888;">₹${origTotal}</span>
+             <span style="color:#2cbe2c;font-weight:bold;margin-left:8px;">₹${orderTotal}</span> (Coupon: <span style="color:#2874f0">${couponCode}</span>)`
+          : `₹${orderTotal}`;
+      const itemsText = order.items.map(item =>
+        `${item.product.name} x${item.qty}`
+      ).join(", ");
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <span>${i+1}. ${itemsText}</span>
+        <span>Order Total: ${discountText}</span>
+        <button onclick="cancelOrder('${order._id}')" style="margin-left:10px;background:#dc3545;color:#fff;padding:6px 12px;border-radius:5px;">
+          Cancel
+        </button>`;
+      orderListDiv.appendChild(div);
+    });
+  } catch {
+    document.getElementById("orderList").textContent = "Could not load order history.";
+  }
+}
+async function cancelOrder(orderId) {
+  if (!confirm("Are you sure you want to cancel this order?")) return;
+  try {
+    const res = await fetch(`http://localhost:5500/api/orders/${orderId}`, {
+      method: "DELETE",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert("Order cancelled!");
+      showOrders();
+    } else {
+      alert("Error cancelling order: " + data.msg);
+    }
+  } catch {
+    alert("Network error!");
+  }
+}
+
+document.getElementById("loginForm").addEventListener("submit", login);
+document.getElementById("signupForm").addEventListener("submit", signup);
+document.getElementById("showSignupBtn").addEventListener("click", showSignup);
+document.getElementById("showLoginBtn").addEventListener("click", showLogin);
+showLogin();
+</script>
+</body>
+</html>
