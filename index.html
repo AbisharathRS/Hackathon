@@ -59,8 +59,6 @@ button:hover{background:#0056b3;}
 </style>
 </head>
 <body>
-
-<!-- LOGIN PAGE -->
 <div id="loginPage" class="login-container">
   <h2>IBM Store Login</h2>
   <form id="loginForm" class="form active">
@@ -74,7 +72,6 @@ button:hover{background:#0056b3;}
   </p>
 </div>
 
-<!-- SIGNUP PAGE -->
 <div id="signupPage" class="login-container hidden">
   <h2>IBM Store Signup</h2>
   <form id="signupForm" class="form">
@@ -89,14 +86,12 @@ button:hover{background:#0056b3;}
   </p>
 </div>
 
-<!-- COUPONS PAGE -->
 <div id="couponsPage" class="hidden" style="max-width:550px;margin:40px auto;text-align:left;">
   <button onclick="backToHome()" class="back-btn">← Back to Home</button>
   <h2>Available Coupons</h2>
   <div id="couponListSection" class="coupon-list-section"></div>
 </div>
 
-<!-- HOME PAGE -->
 <div id="homePage" class="hidden">
   <div class="navbar">
     <div class="logo">IBM Store</div>
@@ -140,7 +135,6 @@ button:hover{background:#0056b3;}
   </section>
 </div>
 
-<!-- PRODUCT DETAIL PAGE -->
 <div id="productDetailPage" class="hidden">
   <button onclick="backToHome()" class="back-btn">← Back</button>
   <h2 id="detailName"></h2>
@@ -158,7 +152,6 @@ button:hover{background:#0056b3;}
   <button onclick="addToCart()">Add to Cart</button>
 </div>
 
-<!-- CART PAGE -->
 <div id="cartPage" class="hidden">
   <button onclick="backToHome()" class="back-btn">← Back to Home</button>
   <h2>Shopping Cart</h2>
@@ -175,7 +168,6 @@ button:hover{background:#0056b3;}
   <div class="center"><button onclick="Buy()">Buy</button></div>
 </div>
 
-<!-- ORDER HISTORY PAGE -->
 <div id="orderHistoryPage" class="hidden">
   <button onclick="backToHome()" class="back-btn">← Back to Home</button>
   <h2>📦 My Orders</h2>
@@ -216,7 +208,21 @@ const products = [
     "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRMd4PoUpNEUuHqBFD5BG8UVzTUVbeFeGOM13hw2PGmBL8I7GRmeCeibevHoOGQUaRqhVeN5VRRyDZQkPJi6T64-RRZ-84Zew",
     "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQd6g0Ius7f-zZ2p5d9yDZSyA-EPEZM-fv7eaXo0HHwIlSdUmPJnmBJoBKnMHFkAODZe9zLhQePRo5fQTN6TIWxDdJJzFbZKJs",
     "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT5PbLLQrbGg8_eF6m6FG_cIY7PbBMludNn7TGEiTMMupimLbK03TmwqKCVpKcJ90rLkSBvojxoXHMoL3eWw9OMNhqx-pFg8mw"
-    ],category:"Mobiles",coupons:["DIWALI50","WELCOME10"]}
+    ],category:"Mobiles",coupons:["DIWALI50","WELCOME10"]},
+  {id:3,name:"Headphones",desc:"Noise cancelling headphones",price:5000,images:["https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQZPoXPFVev6qS_JkOHcNEk3DF3kydoT6clXz-Zyx_Zt2Uu_rI9Q1tyvOsxfbTUjd_6tZK0Co_3K-TuDJs2Z04HN7GcrBtw_QB2dENsE5mJ14PeMY-EmNBOnA","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTsIyKBoSJ8fPSjHkRxSUfNg4wJ9ATRLzVIgTPe_FdpKMOD7JCSq_ewliI1XzmM71-_fqK0pAG8UTg3YlhdqBLh--p1ulM8YbL2aP4rOSOyRbci9GmoEAwN","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTEpkYPz1SBMA_7dDKDQ-yE0rIMeAbV7D79ElQNlA7_dA4eGrwOMmRzTVYamqsA9Ihf-TQAUPayT0H1UkC55ZUgqQh68agwqgRcEodNLI9JKTY3927n_Z0P","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcShnUecLQZmUDhmNigpteZ-OGs6xNFtgbZMk6L6NlWWYov3C28-knsnTdwxseJ-JKvEkRSuN7VPiLZCOAkMiDgqgFiGgjp6vW6_j-Lj0vIR"],category:"Audio"},
+  {id:4,name:"Tablet",desc:"Portable tablet",price:18000,images:["https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSUXc57GuewvCeHpxvuH_XFmHmhcIgM_h1hHEP8Cib1c2HgaIGnewRPblOEOFt4AeIL0tCgcNvafx2r_WI4s5Mq443Imm9xYFus13GXegUaT9DMg-hQ8o6b3g","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTGzSi5HzSYEVjP8eFxNZiX6beLuQJeYsE5O1II5yrGHXy2pOkPEAUBxvVi5s4F34OdnbtQvb_oBwD_Gdsh6yokyo32oFSJOv31fZBGLYECgihO22LJpKuMIA","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTRoxgyfV0-W5YDRYBGHWPdLDoA2Wv2tICFuRj5CRvq4h5Sl9gEpWc69qGPmDjcZvUg2BuPxbZ86rk4AC6lqiYj7kEiUrj6ozAEtmTy-cmANWNAUBKH9x14","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQimPq9hh-t2Hzmlu619xS7gG5yccybSQ2zwiWQxDXiDl8vnCEi0_baYpZyZc1VYfMPbKjGW_V2lxlHjcpC7NlIKX-DS_bIfu9eKjGAMuAu6t-3TNDJzpOmug"],category:"Computers"},
+  {id:5,name:"Smartwatch",desc:"Track your health and fitness",price:7000,images:["https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTjdHhqzFdxnY0uwj9VMFMpirHuLXktYjo9jrc-3mBJXvyXmhhQvyPKSI9vP2mqibUtk5aPj6RYYZqytv22T_10HO2SzqKNJk1I7FwCi21dLxAFnJXjyxt4","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcT_Ff6MTP--svIRfowNCC19e_ytjjJRKuzUz7VMaebKKWMsWuscQDSv3ytxy4Z1mEGQyN0EcQZmZtq7FsP5k0qqr41HuxUKEibeN1qVHa8m","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSCKx_IQjvTU-eLqN_gb0LzGp4eDqs1smYd-uRkDoV2B_xD2C6WD1-7mfaFzXEnT9e7hbtcs6R5UuKVPvqwapg5ezlRlHCHWrVito6Kuvw","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTv3SE9DM5PZDi1bRdrPkWSuN9NEHbAWa75UjxX6MjGZqkvATfh1JttsfZbRczsZcfECTIFhRcLY35E-Cwiugo1Pm7MiRN9-GdKx-VnCg","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQag87HYQOSb_4lUd3dWLlcVtk8dpWLRaV93jqpbKnOUmX103JQuU1Ln4QqTtvdbiH5zZIQLDQGyfGHm186PfMbXx9hKta2ZT8IoBfnJp8j","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSy4NIOGY-et2eH81bw4kOxsBHqh2YDlSEGGtfBF2OXP4-L7ZifOXbFPwypIkB_qKOzXJVC4SbWYDf33JkxcxWXTDltuibD3QDBJNk_iMo"],category:"Wearables"},
+  {id:6,name:"Camera",desc:"DSLR professional camera",price:45000,images:["https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRIwFbFCxts_CF0mVyAJNAkJalrd4dDD4nJWVKJ4evCpPoPQ1cwIoDtXu5sv6lD0r5eQ4U8fsgosBTDzNM7VRpyeTu558ccrN3bucNNviKeRqs9uounHMbT2w","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS_vcjZnLFSoPTmLVS47hPB9VQuQNdzTzADzsMGezDbs25oJlR9wVsEd0ySCE3ACVzKXHbF8EHRzJd4mPs7hZU36KwoQFljoRzmPMUvTqm-fFY7XWZe5kzHIw","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTeSOmzUAcPz35tOOATjfthD6TP4ynKGGNx_7ZGTofEyIS14ptx5E2qG1r50DGhNoss_JlIUMhjKE90UM1c9puFNj3Poo2wawLPGRL5wX4W75IFFeKl6j51Cw","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSJkmgJBja0SsdBkhCsEUX0ei2QgpnYZ-YUYtVChJ2NG-yEPSuND8datB2X1oZF2Z4vrc2KuK7Yvy1cETb5ShyAbKCow0_qx30xctBxZ_Cn2Ns6PaEa2mPx","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRjo7hrC2v_Fc1vRoKUIi9sF_h0YFEdlHmfOpjprIDCLJ_NZ4mXESAj8MyiJ7Vq2zw8BSlEZHazhp-gu8KKcjVR2kF0RmsNXhPkQH-zbw"],category:"Photography"},
+  {id:7,name:"Keyboard",desc:"Mechanical gaming keyboard",price:3500,images:["https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRCLpg8E_4xMKVpZ2aSJ7jPfxivixqDZHUjW_FMD14gExs6p-lzGCmdJPLusw4rM40huTYXn7TtySCU5KCTzDKFlzyPnHai4MuuYsL6zHZN","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTRL9yGnpAlkrkTqFTXyca7iWtrdhReryrkpTiBHlQKfZdTVxTQp3qliabgZrX927A3EWg_VBM4r8kzTM3krA2HtCn-h3m8sP2XRf-lhkbD7xv0Sq03E0pEog","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS9wXckgz6N5x9NEzJHE4qECcBJxjiTkSv4MjxqCCyypaDvpv7W_4NtgBEkrAgte-9c8pzNLcITuiy-5_j8fYqrFYWfnzJovHCjOuWIFSM0mba9D7cowgmbPg","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQWaPasNmHxHs_WPTZpoJdhukwxhFBhaX3H7L7feuaWsBeTvmp0X_9TKx_p9olYjkNM8uWzc1U4VZ8zBxIdBN6I7yPN57Dg3vBAyEIkcxerUOb4ILxpGT6-"],category:"Computers"},
+  {id:8,name:"Mouse",desc:"Wireless ergonomic mouse",price:1200,images:["https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTPTjYNLLsctBpbids01Nt_6PlwT4uu_WzvrSFBB-BDx__mDEKiCBC_HmSjY3SQDt-Bo_H9l1hJu7z__tN6mApnKssuGuYencmsqlchU8kX6G_-38hJ3dwk","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSkOv13pDV5QFEXjYs-LL0O8nBWp5Ty6Em7kDCOOGBde3mTr247mEEhABPK6OqjdGUDpsLNbGQ2ubgN-Ib1gHbR0IiOGNjb11biF2JFhZXXPVg4IN_AqPRYBQ","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcROxyFTvZfwEzT21YMnsqahWK8L8DKLx51w5kxwhwj-VkGDcecFNDpkzzut86ygbeDzzzkU4yRb84ZVIC_zpH5cMOewknohLX8F2pWBmIQG","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTkJs91NFm6aWUv2qUe8oRCoCDnu8CHI35Q1agCc-CwY4LxEuITbtK7_7ZyJvAqK9HHM86aJMShIo3PwF7eYOtrkw_DwajoqnzdSySdmvyz_92wPlrZt77p","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRfeiMO_58mkTXoBRmkyOFH5sbjf3yRob2K7UJ0wapN7Qo7-_LCC9eEG480fmdo7FCWNLtteyHDb-IW0ibgQ4_sbRFpmhGBA6kGpRuhz7Yk"],category:"Computers"},
+  {id:9,name:"Monitor",desc:"4K Ultra HD Monitor",price:20000,images:["https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTyoh_uwOlXkUlqK7RTonJGVT_4cnoRyxeTHSznQpXKlvI5LD-4Ue4VcfyMv_xRQw1iQZFPEiN1lxtet42wlOEWFF7L-a-B_8MEVHOskO6fsPrSRQYtN5J1zw","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSaoSXHdKxrUXBjQvxKhsC99dDAe1y_PtOrwqxdwR_8rLRvXGYw8-GJkpc6qJE-igqfjjyD7fCoLGaLmhzVT4sttesR7Wrmdee1Zf49Nt28","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRTzzwlVkJCEnLy8JsbVIbSBekgQHkWWyguUJhWsEMbqFc7pJlzyOQxwS5Y4fuUE9H6MueuNjOkX_dto6JDXdXaitsEPjoCLZ03tFkCx46g","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTpW5eKRgY14Da2ZdO5_tjGJB4ndMhbYkS8McOKWkKkKCRHTWu4fZRPqsDu0C117IUrf71tq1Cd2gApbB118f1QdUY8jYGaD2lzTqMsgg4"],category:"Computers"},
+  {id:10,name:"Printer",desc:"All-in-one inkjet printer",price:8000,images:["https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRLUdM62Q3AU2inhOEMxh-fXHOtuRf53y2pI3UI-XiBV940uvc84qeTWkgrcy7iGwlpvHrGBllbxUYvKHbusMPr1xx4b6P9FafGzUqP7q7LAF3arMkXGzkrnw","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQWKWQEZY5Qw0lS2B4aLhb0sa1noYXsY0lfyA3wHiYWv9V4sOpN0nTNcKeE2YKAiWDgqxGWUDw1MjzkjAGpRa6IMXYG9ldN44U2_etk7MXhvQCNU4dw0Cf9","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTMZQav1Iz93qbEzzreHU0MMjhSkpT8a81n3bObG0yPhg30q7ICj0kFTn-bGmusY37jd35wACivlaf9lsWaNXwOPSGGwc7KinSQPCYP8kQ","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRUGTSFabcvyyvnABENbrfMqviqHp_RUiMZUyvEfETzI7HPFqxzYyiCy-3-OVWsp2m2AAfiTjZC--FRTmu9y_OtKVCysj9zzr933pQeBwSMQz4XQ6KhzMUkTw"],category:"Computers"},
+  {id:11,name:"Router",desc:"High speed WiFi router",price:3000,images:["https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTkHxBlqdYGaqAleHON4cIpFikxyhfktoaDtQvhNBo-kb0O2nmlpopPcvajWpNHh1h_wsZWRA5bhrK7lk_7Q0iFzTgv4rQX7yvv0K4xDrpjSV9Sxd6cF0Noxg","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRdSmFAKAeYFtw3ntdTppgWZFqZyxtf6IJT-es_4pDsVyV37l_sdFKtRLkhoXXG3kxgWF24-uxaLy8EEYzLbePJ01lyy0U83JkRqCUYq4o","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQSivJGpMB0T7oQOhpmFh4rYcfdHNWTryFP1psSEDBOx9rx6LOE_IqtvuPR2D7PSg6cxKDF5oMIld23EYFHZ4vpKaHjNX-ylSQ2lbWzQmE","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTBU8IiXBXk0_Yi8waLg50M5i6GsPErsWV4Wu3b_EHLLVV-wuFQMRzPkbkd86Hneg2i2ZfoPJKGI3-cOJBnFvOBW4KJzlUeB6VRssbJCvql"],category:"Networking"},
+  {id:12,name:"Speakers",desc:"Bluetooth portable speakers",price:4000,images:["https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSMSNrXRqsafrjjuRIpnOZ3cJbQnpltpiPnCq_jhBMyXJYq7TTU6ZgI1IuXnq3CaTn79hurolJhut8KaOh-Sr-bQ6mtjkSVrdD_IF45v0ilawe-OT6JWdTa6Q","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRg2H5fC-2OcmFRz6DJtgDUiwsigqmH4uEor5ad5MO8D8ql2M0TLNXjlfpVI8EX5tlEGwdxVoMDzLp-OENYWgdm8kmrojmkE6U0HrmH6TuL5QLADXVx4D_H","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRgn-6VYAa3AqFvoXMtPf-_OhfJ9Uhh2JfRpnWtSmOgpENaRqo3LOQgYMDC_zGX6M0ICyTvNgo5C2tH06MNKHmQTJODnyAdzGxgYotb9ZHpQznIB6AI-ELo","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRjJl-ZidMrr1ygRQt6IR1WAFOw1DZrqniD3xSUvQA8xshVLzt2RQEwP8_AjSW5eVqJRD1uTgcy4fyjBLqR4K5R6Ac2VsFQy9uYLTbAsO-Ykvrfwlv4Bc70"],category:"Audio"},
+  {id:13,name:"External HDD",desc:"1TB external hard disk",price:6000,images:["https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR6UJEI2FUmZyZUiJO2SbE-lMloyV-rRuCyK98fOXcQ4cD6uPYWirp9-d8QXlXmvTFiwrkdRGugQ_0cIS2LSPmJcyK1ocBsixl9LCtB0K_U1Ymmp0WPq2ZJtg","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTHJY58TZRIeQKQk13YGK3olR5GwBD-bPBZcrsocwBVIqqP5-_yUVbnWw7xyjB6uaV_yfceolE93Xy_Kk1JU-GvOt8b5sQXm1plV55V6NV9sE8WXh9VGOKqaA","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSVAZVvIhjtAapRft2909SFQ9XwukVlV_AUBIaGSni6-sn6xDcZpUzj4nxYV99mzQQbaSOv4_QWHd_4W_ODvxrpjh0GiFVHzogqsNZiCKtGKBZ7pEyn47YMww"],category:"Computers"},
+  {id:14,name:"Power Bank",desc:"10000mAh fast charging",price:1500,images:["https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTYv-qiPyM0QntkGcGGa56zoQ5-9bF7sKytnwn8ukmzXU_fX8sLDLJ7wcbutq12Di-izV9ZdiTHnH5UR01ParFk6i9-U12wfWqieCMEEW4bdPbiQEqE9ooqplE","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS3cUw2pIWxRS5wYe0miC3lOlVOs-eTqJe0BIIS7T_9xdTh6XHiqvLQvuR4rgwEQ2CPXIvs4QDNf-TpVHiBZFlQFd5m4aT_p6a8lXCEI6gUwfZBWLIlEi7fzA","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRHEdS5tvKawYiog44Fy9kv_qi9rdN3Kd1UUjJ7jo7MueERZH4gwHQ92_SE9MftwQjkvO3U0Od9dhnmg1Odp07Mdd6mKvIaLdJLgXbDASEr7Mlhemt4mpTT","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTbvIdxgsUNM4KSqkc39vNQsJ-1d_1Kcph9A7IoKzvU8Uj-kdXg7FDJ9yiBVVgrJu0-bhyMuJ6Gwfgf7WBhZYeiXwg8maJzJBcE1Xddt8zW-aaZHnaQuxgY","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQeY2BGyjv-zi_Pea_IVPgAnCDH7Pl0gb2a8dOKgcH-PHsOPmTZ92R-6jQBK2Th39W-KAoigTl2NzxEkmC7Lczd6GltgY_hkYKkRmLP74OC"],category:"Accessories"},
+  {id:15,name:"TV",desc:"55 inch 4K Smart TV",price:65000,images:["https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTrOxXhp3X1zJUxeFSnbDBFOge0P6IGVCrwcaP0XY4E1vwZu3uVDFCGITUowtdEv2OHXIcz4rk39_WZgDCkCH4ehMHL01jqTgp3MLrdpyx6w1y8jaoAhKjm","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQadtHKAexEaIAJaJuaz39p5tbnVZM--FtSUrhUrjiPU-VGlxfLQGXnGYFUa8b-PfxIk9AanZct_WO5O_bbtt3fIybGyFbprGBxlilJY7uPJa4gXRPK6XAJmQ","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRD0f2dQY-wbgwnJwOHnUG_xcul6h0KWq-8tZaZ_xZ6hyaeG_EkuH4g2Ywtg6uleSnA4SCQQtL4IbifDKUxHPaYDVn-m-Zw4T3P_2BY_nqLWqM0F_BuoQwh","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRdMA8ReefLy7fqrqvIWS8u_ft42sLhIUSN7L-NjtMQbZ1W3TLtMLkq1LkUoqr6Mr0A8FcI-gG5ounqLF0aySYhI9TzadnBCj_2DlT1owP3"],category:"Electronics"},
+  {id:16,name:"Air Conditioner",desc:"Energy efficient AC",price:40000,images:["https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSuUPJg_2Cd3PSY25tqf8RSuGknb56IatWldGX-LZwgBhG8oeZrnXlqf-eYxcAsafABhX7QIMjff9AEzGBqTTqjpqlwsHsVU9fCF6cYaqzf94wXHe6uoR2j","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTssKvlcZmCveS8u_GtI9xF7zwT-CToV_EXukjoWaj1oDqL3YV2LnUIpdzYHikonToxRNKIwCCBZk1j-LotocvxkRy-4OPoXxtqk8f0M45tw17m_jvTQva_Ow","https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSZlLf4RaTJtoP8YY1zoO3ZMPjvlHLqLbW630n2hI19TeT6G25-taz4ngahP75Q6BKEVkWQOD5PjCqxXyDG9QHJLs95KWddnAbaQbVnofMO","https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRNoemFJlHURlf8HyvuGVVgvgfmgvI7hbauZF0SxD_11VvB1L4_eb0y2ziuo8GHKnxZGo0mwhxLVH9VS4yVHSTjrhIbo8agIsCOQ7rf8dHJXajAkw-Ac0XD","https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSbyrHhs5fQbHOr9j80VqWZWjT7x4LTGnLF2yC_TKp4aGFcoqVqn7InDhqihyvcIED7pHsiMsr9WAVeJfdIL5lce3yGx4RKUfN6zKqOicnH","https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQNps829aKkKbnLtdIMhxeYW9pLx0ajxIeO_PiSAggeCwnvXsby9USkazr0BkHmTd331GXw1L_zDxR-dJMcP2NCf6viSsYPYOeuq8p9MMU"],category:"Appliances"}
 ];
 
 function getProductDiscount(product, coupon) {
@@ -564,3 +570,4 @@ showLogin();
 </script>
 </body>
 </html>
+
